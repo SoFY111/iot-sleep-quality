@@ -13,7 +13,13 @@ module.exports = {
             '6': '6px',
             '8': '8px',
         },
-        extend: {},
+        extend: {
+            colors: {
+                'bootstrapSuccess': '#28A745',
+                'bootstrapDanger': '#DC3545',
+                'bootstrapSecondary': '#FFC107',
+            }
+        },
     },
     plugins: [],
 }

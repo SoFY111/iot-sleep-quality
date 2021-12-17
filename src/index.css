@@ -16,3 +16,23 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.manuelHeight{
+    height: calc(100vh - 296px);
+}
+.manuelHeightV2{
+    height: calc(100% - 45px);
+}
+
+.manuelHeightV2::-webkit-scrollbar {
+    width: 8px;
+}
+
+.manuelHeightV2::-webkit-scrollbar-thumb {
+    background-color: #595959;
+    border-radius: 12px;
+    border: 1px solid #595959;
+}
+.manuelHeightV2::-webkit-scrollbar-track {
+    background: #c2c2c2;
+}

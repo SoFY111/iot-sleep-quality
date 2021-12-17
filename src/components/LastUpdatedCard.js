@@ -13,26 +13,13 @@ const LastUpdatedCard = () => {
 
         if (docSnap.exists()) {
             const firestoreDate = docSnap.data()?.date.seconds * 1000;
-            /*
-            console.log((docSnap.data()?.date.seconds))
-            console.log((firestoreDate))
-            console.log(typeof(firestoreDate))
-            console.log((docSnap.data()?.date).toDate().toLocaleDateString('en-US') + ' ' + (docSnap.data()?.date).toDate().toLocaleTimeString())
-            */
 
             const utcDate = (new Date(firestoreDate)).toUTCString();
             const lastDate = (new Date(utcDate).getDate() - 1) + "/" + (new Date(utcDate).getMonth() + 1) + "/" + new Date(utcDate).getFullYear() + ' ' + new Date(utcDate).getUTCHours() + ':'+ new Date(utcDate).getUTCMinutes();
             setLastAddedDate(lastDate);
-
-
         } else {
-            // doc.data() will be undefined in this case
             setLastAddedDate("Veri güncellenemedi.")
         }
-
-        /*const datas = collection(firestoreDb, '1639515600');
-        const citySnapshot = await getDocs(datas);
-        citySnapshot.docs.map(doc => console.log(doc.data()));*/
 
     }, [])
 
