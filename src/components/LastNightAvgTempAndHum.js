@@ -17,12 +17,12 @@ class LastNightAvgTempAndHum extends React.Component {
             .limit(1)
             .onSnapshot(docs => {
                 docs.forEach(doc => {
-                    this.ccs(doc.id)
+                    this.calcAvgTemp(doc.id)
                 })
             });
     }
 
-    ccs = (lastDay) => {
+    calcAvgTemp = (lastDay) => {
         //console.log(lastDay)
         firestoreAppDb.collection('data')
             .doc(lastDay)
@@ -39,13 +39,14 @@ class LastNightAvgTempAndHum extends React.Component {
                 })
                 // console.log('Ortalama Sıcaklık(Toplam): ' + (totalHeat/counter).toFixed(2) + '(' + totalHeat + ')\nOrtalama Nem(Toplam): ' + (totalHum/counter).toFixed(2) + '%(' + totalHeat + ')')
                 this.setState({
-                    lastDayAvgTemp: (totalHeat/counter).toFixed(2),
-                    lastDayAvgHum: (totalHum/counter).toFixed(2)
+                    lastDayAvgTemp: (totalHeat / counter).toFixed(2),
+                    lastDayAvgHum: (totalHum / counter).toFixed(2)
                 })
             })
     }
+
     render() {
-        return <>
+        return (
             <div className="p-8 ">
                 <div className="bg-white p-6 rounded-lg shadow-lg border-l-3 border-indigo-500">
                     <h2 className="text-2xl font-semibold mb-2 text-gray-800">Son Gece Ortalama Nem ve Sıcaklık</h2>
@@ -55,7 +56,7 @@ class LastNightAvgTempAndHum extends React.Component {
                     </div>
                 </div>
             </div>
-        </>
+        )
     }
 }
 
