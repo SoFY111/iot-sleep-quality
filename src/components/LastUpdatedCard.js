@@ -21,8 +21,7 @@ const LastUpdatedCard = () => {
             */
 
             const utcDate = (new Date(firestoreDate)).toUTCString();
-            console.log(firestoreDate)
-            const lastDate = new Date(utcDate).getDate() + "/" + (new Date(utcDate).getMonth() + 1) + "/" + new Date(utcDate).getFullYear() + ' ' + new Date(utcDate).getUTCHours() + ':'+ new Date(utcDate).getUTCMinutes();
+            const lastDate = (new Date(utcDate).getDate() - 1) + "/" + (new Date(utcDate).getMonth() + 1) + "/" + new Date(utcDate).getFullYear() + ' ' + new Date(utcDate).getUTCHours() + ':'+ new Date(utcDate).getUTCMinutes();
             setLastAddedDate(lastDate);
 
 

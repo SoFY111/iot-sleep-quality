@@ -1,78 +1,62 @@
-import {useEffect, useState} from "react";
-import firestoreDb from "../firebaseConfig";
-import {collection, getDocs, getDoc, doc, listCollections, getFirestore} from 'firebase/firestore'
-import { firestoreAppDb } from '../firebaseConfig';
+import React from "react";
+import {firestoreAppDb} from "../firebaseConfig";
 
-const LastNightAvgTempAndHum = () => {
+class LastNightAvgTempAndHum extends React.Component {
 
-    const [allDates, setAllDates] = useState([])
-    const [datesLength, setDatesLength] = useState(0)
-    const [lastDay, setLastDay] = useState()
+    constructor(props) {
+        super(props);
+        this.state = {
+            lastDayAvgTemp: 0,
+            lastDayAvgHum: 0
+        }
+    }
 
-    useEffect(async () => {
-
-       /* await firestoreAppDb.collection('data')
-            .doc('1639515600')
-            .collection('1639515600')
+    componentDidMount() {
+        firestoreAppDb.collection('data')
+            .orderBy('date', 'desc')
+            .limit(1)
             .onSnapshot(docs => {
                 docs.forEach(doc => {
-                    console.log(doc.data())
-                })
-            })*/
-
-         /*firestoreAppDb.collection('data')
-             .orderBy('date', 'asc')
-             .limit(1)
-             .onSnapshot(docs => {
-                let dates = []
-                docs.forEach(doc => {
-                    dates.push(doc.id)
-                })
-                setDatesLength(dates.length)
-                setAllDates(dates)
-            });
-
-         console.log(allDates)*/
-
-         firestoreAppDb.collection('data')
-             .orderBy('date', 'asc')
-             .limit(1)
-             .onSnapshot(docs => {
-                docs.forEach(doc => {
-                    setLastDay(doc.id)
+                    this.ccs(doc.id)
                 })
             });
+    }
 
-         firestoreAppDb.collection('data')
-             .doc(lastDay)
-             .collection(lastDay)
-             .onSnapshot(docs => {
-                 
-             })
-
-         console.log('lastDay: ' + lastDay)
-
-        /*firestoreAppDb
-            .collection("data/1639515600/1639515600").get().then(subDocs => {
-                subDocs.forEach(subDoc => {
-                    console.log(subDoc.id)
+    ccs = (lastDay) => {
+        //console.log(lastDay)
+        firestoreAppDb.collection('data')
+            .doc(lastDay)
+            .collection(lastDay)
+            .limit(57)
+            .onSnapshot(docs => {
+                let counter = 0;
+                let totalHeat = 0, totalHum = 0;
+                docs.forEach((doc, index) => {
+                    counter++;
+                    totalHeat += doc.data()?.temp;
+                    totalHum += doc.data()?.humadity;
+                    // console.log(counter + ') docId: ' + doc.id + '\ntemp:' +doc.data()?.temp + '\nhum:' + doc.data()?.humadity)
                 })
-        })*/
-
-
-    }, [datesLength])
-
-    return(
-        <div className="p-8 ">
-            <div className="bg-white p-6 rounded-lg shadow-lg border-l-3 border-indigo-500">
-                <h2 className="text-2xl font-semibold mb-2 text-gray-800">Son Gece Ortalama Nem ve Sıcaklık</h2>
-                <div className="flex flex-col text-gray-500">
-                    <label>Nem: 30%</label>
-                    <label>Sıcaklık: 22.2C</label>
+                // console.log('Ortalama Sıcaklık(Toplam): ' + (totalHeat/counter).toFixed(2) + '(' + totalHeat + ')\nOrtalama Nem(Toplam): ' + (totalHum/counter).toFixed(2) + '%(' + totalHeat + ')')
+                this.setState({
+                    lastDayAvgTemp: (totalHeat/counter).toFixed(2),
+                    lastDayAvgHum: (totalHum/counter).toFixed(2)
+                })
+            })
+    }
+    render() {
+        return <>
+            <div className="p-8 ">
+                <div className="bg-white p-6 rounded-lg shadow-lg border-l-3 border-indigo-500">
+                    <h2 className="text-2xl font-semibold mb-2 text-gray-800">Son Gece Ortalama Nem ve Sıcaklık</h2>
+                    <div className="flex flex-col text-gray-500">
+                        <label>Nem: {this.state.lastDayAvgHum}%</label>
+                        <label>Sıcaklık: {this.state.lastDayAvgTemp}C</label>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        </>
+    }
 }
 
 export default LastNightAvgTempAndHum
