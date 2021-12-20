@@ -17,7 +17,7 @@ module.exports = {
             colors: {
                 'bootstrapSuccess': '#28A745',
                 'bootstrapDanger': '#DC3545',
-                'bootstrapSecondary': '#FFC107',
+                'bootstrapSecondary': '#F3B600',
             }
         },
     },

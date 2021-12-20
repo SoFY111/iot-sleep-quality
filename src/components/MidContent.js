@@ -24,8 +24,12 @@ class MidContent extends React.Component {
     }
 
     calcLastSevenDaysAvg = (lastSevenDays) => {
+        this.setState({
+            sevenDaysAvg: []
+        })
         let counter = 0, totalHeat = 0, totalHum = 0, lastSevenDaysAvg = [];
         lastSevenDays.forEach(days => {
+            totalHeat = 0; totalHum = 0; counter = 0;
             firestoreAppDb.collection('data')
                 .doc(days)
                 .collection(days)
@@ -36,6 +40,7 @@ class MidContent extends React.Component {
                         totalHeat += date.data()?.temp
                         totalHum += date.data()?.humadity
                     })
+
                     lastSevenDaysAvg.push({
                         date: days,
                         avgHeat: (totalHeat / counter).toFixed(2),
@@ -44,6 +49,9 @@ class MidContent extends React.Component {
                 })
             counter = 0
         })
+
+        console.log(lastSevenDaysAvg)
+
         this.setState({
             sevenDaysAvg: lastSevenDaysAvg
         })

@@ -12,15 +12,15 @@ class AvgTempAndHum extends React.Component {
     }
 
     componentDidMount() {
-        /*firestoreAppDb.collection('data')
+        firestoreAppDb.collection('data')
             .onSnapshot(docs => {
                 let allDays = []
                 docs.forEach(doc => {
                     allDays.push(doc.id)
                     console.log(doc.id)
                 })
-                //this.calcAvgTempAndHum(allDays)
-            })*/
+                this.calcAvgTempAndHum(allDays)
+            })
     }
 
     calcAvgTempAndHum = (allDays) => {
@@ -50,8 +50,8 @@ class AvgTempAndHum extends React.Component {
                 <div className="bg-white p-6 rounded-lg shadow-lg border-l-3 border-red-500">
                     <h2 className="text-2xl font-semibold mb-2 text-gray-800">Ortalama Nem ve Sıcaklık</h2>
                     <div className="flex flex-col text-gray-500">
-                        <label>Nem: 36{this.state.avgHum}%</label>
-                        <label>Sıcaklık: 26.3{this.state.avgHeat}C</label>
+                        <label>Nem: {this.state.avgHum}%</label>
+                        <label>Sıcaklık: {this.state.avgHeat}C</label>
                     </div>
                 </div>
             </div>
